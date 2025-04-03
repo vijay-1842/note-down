@@ -2,7 +2,7 @@
 
 venv/
 
-backend/.env/
+backend/.env
 backend/__pycache__/
 backend/**/__pycache__/
 
