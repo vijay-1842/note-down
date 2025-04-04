@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
-import { getData } from "@/utils/axiosInstance";
+import { deleteData, getData } from "@/utils/axiosInstance";
 import NoteCreationModal from "./components/NoteCreationModal";
 
 const Home: React.FC = () => {
@@ -10,8 +10,14 @@ const Home: React.FC = () => {
   const [creationModalopen, setCreationModalOpen] = useState(false);
 
   const getNotes = () => {
-    getData("/api/notes").then((data) => {
-      setNotes(data);
+    getData("/api/notes").then((resp) => {
+      setNotes(resp.data);
+    });
+  };
+
+  const deleteNote = (note_id: string) => {
+    deleteData(`api/notes/${note_id}`).then((resp) => {
+      if (resp.success) getNotes();
     });
   };
 
@@ -32,9 +38,13 @@ const Home: React.FC = () => {
         </div>
         {notes.length === 0 && <p>No notes available</p>}
         {notes.map((note: any) => (
-          <div key={note.id}>
-            <h3>{note.title}</h3>
-            <p>{note.content}</p>
+          <div key={note.note_id} className="border p-4 my-2">
+            <h3>{note.note_title}</h3>
+            <p>{note.note_content}</p>
+            <div>
+              <button>Edit</button>
+              <button onClick={() => deleteNote(note.note_id)}>Delete</button>
+            </div>
           </div>
         ))}
       </div>

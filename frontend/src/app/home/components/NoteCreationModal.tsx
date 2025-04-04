@@ -12,8 +12,9 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea"; // Assuming you have a styled Textarea component
+import { Textarea } from "@/components/ui/textarea";
 import { Dispatch, SetStateAction } from "react";
+import { postData } from "@/utils/axiosInstance";
 
 const formSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
@@ -25,6 +26,7 @@ type FormData = z.infer<typeof formSchema>;
 export default function NoteModal({
   open,
   setOpen,
+  getNotes,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -40,8 +42,10 @@ export default function NoteModal({
   });
 
   const onSubmit = (data: FormData) => {
-    console.log("Form Data:", data);
-    setOpen(false);
+    postData("api/notes", data).then(() => {
+      setOpen(false);
+      getNotes();
+    });
   };
 
   return (
