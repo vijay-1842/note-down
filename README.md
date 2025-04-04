@@ -2,6 +2,21 @@
 
 A powerful notes-taking app to create, edit, and organize your notes efficiently.
 
+## Tech Stack
+
+Tech Stack used in this project:
+
+- Frontend
+    + Next JS
+    + TypeScript
+    + Tailwind CSS
+    + shadcn ui for ui elements.
+- Backend
+    + Python (3.12)
+    + Flask
+    + pymongo
+- Database
+    + Mongo DB
 
 ## Requirements
 - NodeJS (Recommended v20 or above)
@@ -62,3 +77,27 @@ Install dependancies
 pip install -r requirements.txt
 ```
 Run Python app using by `python3 app.py` or `flask run`.
+
+
+## Example Screenshots
+
+Register Screen
+
+![Register](./example_screenshots/register.png)
+
+Login Screen
+
+![Login](./example_screenshots/login.png)
+
+Home Screen
+
+![Home1](./example_screenshots/home1.png)
+
+![Home2](./example_screenshots/home2.png)
+
+Create Note Modal
+
+![Creation](./example_screenshots/create.png)
+
+Edit Note Modal
+![Edit](./example_screenshots/edit.png)

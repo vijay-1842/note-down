@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>NoteDown 📚 - Organize Your Thoughts</title>
+        <title>NoteDown - Organize Your Thoughts</title>
         <meta name="description" content="A powerful notes-taking app to create, edit, and organize your notes efficiently."/>
         <meta name="keywords" content="notes, notes app, online notepad, note-taking"/>
         <meta name="author" content="Vijay M"/>
