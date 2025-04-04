@@ -6,6 +6,8 @@ import { z } from "zod";
 import { Md5 } from "ts-md5";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { postData } from "@/utils/axiosInstance";
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { setToken } from '@/lib/authSlice';
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -16,8 +18,8 @@ const formSchema = z.object({
     .regex(/[A-Z]/, "Must include at least one uppercase letter")
     .regex(/[0-9]/, "Must include at least one number")
     .regex(
-      /[@$!%*?&]/,
-      "Must include at least one special character (@, $, !, etc.)"
+      /[#@$!%*?&]/,
+      "Must include at least one special character (@, $, #, !, etc.)"
     ),
 });
 
@@ -25,6 +27,7 @@ type FormData = z.infer<typeof formSchema>;
 
 const Signup: React.FC = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -38,9 +41,9 @@ const Signup: React.FC = () => {
       user_email: data.email,
       password: Md5.hashStr(data.password),
     };
-    postData("/api/auth/login", requestBody).then((response) => {
-      console.log(response);
-      if (response.success) {
+    postData("/api/auth/login", requestBody).then((resp) => {
+      if (resp.success) {
+        dispatch(setToken(resp.token));
         router.replace("/home");
       }
     });

@@ -1,5 +1,8 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Geist, Geist_Mono } from "next/font/google";
+import { Provider } from 'react-redux';
+import { store } from '@/lib/store';
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,18 +15,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "NoteDown 📚 - Organize Your Thoughts",
-  description:
-    "A powerful notes-taking app to create, edit, and organize your notes efficiently.",
-  keywords: "notes, notes app, online notepad, note-taking",
-  authors: [
-    {
-      name: "Vijay M",
-    },
-  ],
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,10 +22,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>NoteDown 📚 - Organize Your Thoughts</title>
+        <meta name="description" content="A powerful notes-taking app to create, edit, and organize your notes efficiently."/>
+        <meta name="keywords" content="notes, notes app, online notepad, note-taking"/>
+        <meta name="author" content="Vijay M"/>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Provider store={store}>
+          {children}
+        </Provider>
       </body>
     </html>
   );

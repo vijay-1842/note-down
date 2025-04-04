@@ -18,7 +18,7 @@ const formSchema = z
       .regex(/[A-Z]/, "Must include at least one uppercase letter")
       .regex(/[0-9]/, "Must include at least one number")
       .regex(
-        /[@$!%*?&]/,
+        /[#@$!%*?&]/,
         "Must include at least one special character (@, $, !, etc.)"
       ),
     confirmPassword: z.string(),

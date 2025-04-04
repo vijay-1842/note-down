@@ -45,5 +45,9 @@ def login():
     if not user or not bcrypt.check_password_hash(user["password"], password):
         return jsonify({"error": "Invalid email or password"}), 401
 
-    token = create_access_token(identity=user_email, expires_delta=datetime.timedelta(days=1))
+    token = create_access_token(
+        identity=user_email,
+        expires_delta=datetime.timedelta(days=1),
+        additional_claims={"user_name": user["user_name"], "user_id": user["user_id"]},
+    )
     return jsonify({"token": token, "user_id": user["user_id"], "success": True}), 200

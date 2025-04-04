@@ -5,6 +5,8 @@ import Header from "./components/Header";
 import { deleteData, getData } from "@/utils/axiosInstance";
 import NoteCreationModal from "./components/NoteCreationModal";
 import NoteEditModal from "./components/NoteEditModal";
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { useRouter } from "next/navigation";
 
 type NoteEditData = {
   note_id: string;
@@ -21,6 +23,8 @@ type Note = {
 }
 
 const Home: React.FC = () => {
+  const router = useRouter();
+  const { token, decoded, authLoaded } = useAppSelector(state => state.auth);
   const [notes, setNotes] = useState<Note[]>([]);
   const [creationModalopen, setCreationModalOpen] = useState<boolean>(false);
   const [editModalopen, setEditModalOpen] = useState<boolean>(false);
@@ -48,13 +52,17 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-    getNotes();
-  }, []);
+    if (!authLoaded) return;
+    if (!token) router.replace("/signin");
+    else getNotes();
+  }, [token, authLoaded]);
+
+  if (!authLoaded || !token) return <div>Loading...</div>;
 
   return (
     <div>
       <Header />
-      <p>Hello User</p>
+      <p>Hello {decoded?.user_name || "User"}</p>
       <div>
         <div className="my-4 flex justify-between">
           <h2>Your Notes</h2>
