@@ -3,13 +3,20 @@
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import { getData } from "@/utils/axiosInstance";
+import NoteCreationModal from "./components/NoteCreationModal";
 
 const Home: React.FC = () => {
   const [notes, setNotes] = useState([]);
-  useEffect(() => {
+  const [creationModalopen, setCreationModalOpen] = useState(false);
+
+  const getNotes = () => {
     getData("/api/notes").then((data) => {
       setNotes(data);
     });
+  };
+
+  useEffect(() => {
+    getNotes();
   }, []);
 
   return (
@@ -19,7 +26,7 @@ const Home: React.FC = () => {
       <div>
         <div className="my-4 flex justify-between">
           <h2>Your Notes</h2>
-          <button onClick={() => alert("Create new note")}>
+          <button onClick={() => setCreationModalOpen(true)}>
             Create New Note
           </button>
         </div>
@@ -31,6 +38,12 @@ const Home: React.FC = () => {
           </div>
         ))}
       </div>
+
+      <NoteCreationModal
+        open={creationModalopen}
+        setOpen={setCreationModalOpen}
+        getNotes={getNotes}
+      />
     </div>
   );
 };
