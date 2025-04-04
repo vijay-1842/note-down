@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Dispatch, SetStateAction } from "react";
-import { postData } from "@/utils/axiosInstance";
+import { updateData } from "@/utils/axiosInstance";
 
 const formSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
@@ -23,14 +23,24 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-export default function NoteCreationModal({
+type NoteEditData = {
+  note_id: string;
+  note_title: string;
+  note_content: string;
+};
+
+export default function NoteEditModal({
   open,
   setOpen,
   getNotes,
+  noteData,
+  setEditData,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   getNotes: () => void;
+  noteData: NoteEditData;
+  setEditData: Dispatch<SetStateAction<NoteEditData | null>>;
 }) {
   const {
     register,
@@ -38,13 +48,14 @@ export default function NoteCreationModal({
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: { title: "", content: "" },
+    defaultValues: { title: noteData.note_title, content: noteData.note_content },
   });
 
   const onSubmit = (data: FormData) => {
-    postData("api/notes", data).then(() => {
-      setOpen(false);
+    updateData(`api/notes/${noteData.note_id}`, data).then(() => {
       getNotes();
+      setEditData(null);
+      setOpen(false);
     });
   };
 
@@ -52,7 +63,7 @@ export default function NoteCreationModal({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create New Note</DialogTitle>
+          <DialogTitle>Edit Note</DialogTitle>
           <DialogDescription>
             Enter the title and content for your note.
           </DialogDescription>
@@ -83,7 +94,7 @@ export default function NoteCreationModal({
           </div>
 
           <Button type="submit" className="w-full">
-            Create Note
+            Update Note
           </Button>
         </form>
       </DialogContent>

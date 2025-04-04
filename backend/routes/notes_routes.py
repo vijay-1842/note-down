@@ -30,7 +30,7 @@ def update_note(note_id):
     data = request.get_json()
     notes_collection.update_one(
         {"note_id": note_id},
-        {"$set": {"note_title": data["note_title"], "note_content": data["note_content"], "last_update": datetime.utcnow()}}
+        {"$set": {"note_title": data["title"], "note_content": data["content"], "last_update": datetime.utcnow()}}
     )
     return jsonify({"message": "Note updated successfully", "success": True}), 200
 
