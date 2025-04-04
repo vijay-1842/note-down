@@ -29,26 +29,23 @@ type NoteEditData = {
   note_content: string;
 };
 
-export default function NoteEditModal({
-  open,
-  setOpen,
-  getNotes,
-  noteData,
-  setEditData,
-}: {
+const NoteEditModal: React.FC<{
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   getNotes: () => void;
   noteData: NoteEditData;
   setEditData: Dispatch<SetStateAction<NoteEditData | null>>;
-}) {
+}> = ({ open, setOpen, getNotes, noteData, setEditData }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: { title: noteData.note_title, content: noteData.note_content },
+    defaultValues: {
+      title: noteData.note_title,
+      content: noteData.note_content,
+    },
   });
 
   const onSubmit = (data: FormData) => {
@@ -100,4 +97,6 @@ export default function NoteEditModal({
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default NoteEditModal;

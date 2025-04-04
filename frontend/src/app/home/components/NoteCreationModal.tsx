@@ -23,15 +23,11 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-export default function NoteCreationModal({
-  open,
-  setOpen,
-  getNotes,
-}: {
+const NoteCreationModal: React.FC<{
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   getNotes: () => void;
-}) {
+}> = ({ open, setOpen, getNotes }) => {
   const {
     register,
     handleSubmit,
@@ -89,4 +85,6 @@ export default function NoteCreationModal({
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default NoteCreationModal;
