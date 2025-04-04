@@ -10,7 +10,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Dispatch, SetStateAction } from "react";
@@ -78,9 +77,12 @@ const NoteCreationModal: React.FC<{
             )}
           </div>
 
-          <Button type="submit" className="w-full">
+          <button
+            type="submit"
+            className="w-full text-white bg-purple-800 py-2 rounded-lg cursor-pointer hover:bg-purple-600 hover:shadow-xl transition duration-200"
+          >
             Create Note
-          </Button>
+          </button>
         </form>
       </DialogContent>
     </Dialog>

@@ -12,8 +12,8 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="p-4 bg-gradient-to-br from-purple-800 via-purple-600 to-purple-700 text-white shadow-md">
-      <div className="flex items-center justify-between max-w-7xl mx-auto">
+    <header className="px-4 py-4 bg-gradient-to-br from-purple-800 via-purple-600 to-purple-700 text-white shadow-md">
+      <div className="flex items-center justify-between max-w-7xl mx-auto px-4">
         <div className="flex items-center gap-3">
           <h1 className="text-xl font-bold">NoteDown</h1>
         </div>
